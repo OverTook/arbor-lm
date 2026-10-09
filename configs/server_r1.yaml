@@ -1,0 +1,29 @@
+data_root: ~/arbor-data
+workers: 56
+bench_micro: 8
+shareable_dir: docs_shareable
+
+sources:
+  ko_wiki: {repo: wikimedia/wikipedia, prefix: 20231101.ko/, field: text, target_bytes: 2.0e9, group: ko, val: 0.004, mock: 0.05}
+  ko_web:  {repo: HuggingFaceFW/fineweb-2, prefix: data/kor_Hang/train/, field: text, target_bytes: 6.0e9, group: ko, val: 0.004, mock: 0.003}
+  en_web:  {repo: HuggingFaceFW/fineweb-edu, prefix: sample/10BT/, field: text, target_bytes: 4.0e9, group: en, val: 0.004, mock: 0.003}
+  code:    {repo: bigcode/the-stack-dedup, prefix: data/python/, field: content, target_bytes: 1.2e9, group: code, val: 0.01, mock: 0.0}
+mix: {ko: 0.55, en: 0.35, code: 0.10}
+
+benchmarks:
+  kobest:    {repo: skt/kobest_v1, include: [test, validation]}
+  kmmlu:     {repo: HAERAE-HUB/KMMLU, include: [-dev., -test.], exclude: [ipynb_checkpoints]}
+  haerae:    {repo: HAERAE-HUB/HAE_RAE_BENCH_1.1, include: []}
+  mmlu:      {repo: cais/mmlu, include: [/test-, /validation-, /dev-], exclude: [auxiliary_train, all/]}
+  hellaswag: {repo: Rowan/hellaswag, include: [validation, test]}
+  arc:       {repo: allenai/ai2_arc, include: [ARC-Challenge/test, ARC-Challenge/validation]}
+
+bpe: {sample_bytes: 1.5e9, vocab: 32000}
+
+r1:
+  size: S
+  micro: 32
+  tokens_per_step: 262144
+  pilot:    {variant: A1, rnns: [gla, gdn], tokens: 1.0e8, lr: 2.0e-3, seed: 0}
+  lr_sweep: {variants: [A0, A3], lrs: [1.0e-3, 2.0e-3, 4.0e-3], tokens: 1.0e8, seed: 0}
+  full:     {variants: [A0, A1, A2, A3, A3s], seeds: [0, 1], tokens: 6.0e8}

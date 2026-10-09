@@ -1,0 +1,14 @@
+entry: arbor.train.r2
+data_config: configs/server_r1.yaml
+data_root: ~/arbor-data
+gpu_mem_gb: 40
+hash_device: cuda
+best_arbor: A3s
+rnn: gdn
+r1_lrs: [1.0e-3, 2.0e-3, 4.0e-3]
+r1_best_lr: {A0: 1.0e-3, A3: 2.0e-3}
+
+s:  {micro: 32, tokens_per_step: 262144, full_tokens: 6.0e8, seeds: [0, 1]}
+lr_ext: {tokens: 1.0e8, seed: 0, A0: [5.0e-4, 2.5e-4], A3: [1.5e-3, 3.0e-3]}
+m:  {micro: 8, tokens_per_step: 524288, sweep_tokens: 1.0e8, sweep_mults: [0.3333, 0.5, 0.6667, 1.0],
+     full_tokens: 2.0e9, seed_rule_bpb: 0.03}

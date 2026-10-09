@@ -1,0 +1,13 @@
+entry: arbor.train.r2
+data_config: configs/smoke_r1.yaml
+data_root: ~/arbor-data/smoke
+gpu_mem_gb: 7.5
+hash_device: cuda
+model_overrides: {hash_log_rows: 16}
+best_arbor: A3s
+rnn: gdn
+r1_lrs: [1.0e-3, 2.0e-3]
+r1_best_lr: {A0: 1.0e-3, A3: 2.0e-3}
+s:  {micro: 2, tokens_per_step: 8192, full_tokens: 2.4e5, seeds: [0, 1]}
+lr_ext: {tokens: 1.6e5, seed: 0, A0: [5.0e-4, 2.5e-4], A3: [1.5e-3, 3.0e-3]}
+m:  {micro: 2, tokens_per_step: 4096, sweep_tokens: 4.1e4, sweep_mults: [0.5, 1.0], full_tokens: 8.2e4, seed_rule_bpb: 0.03}

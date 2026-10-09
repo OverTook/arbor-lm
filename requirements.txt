@@ -1,0 +1,9 @@
+torch==2.14.1
+flash-linear-attention==0.5.2
+numpy>=1.26,<3
+pyarrow>=15
+tokenizers>=0.20,<0.24
+huggingface_hub>=0.30
+pypdf>=4
+PyYAML>=6
+pytest>=8

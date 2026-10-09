@@ -1,0 +1,6 @@
+docs_shareable/*.pdf
+__pycache__/
+*.pyc
+.pytest_cache/
+arbor.bundle
+blog/

@@ -1,0 +1,20 @@
+data_root: ~/arbor-data/smoke
+workers: 8
+bench_micro: 1
+shareable_dir: docs_shareable
+sources:
+  ko_wiki: {repo: wikimedia/wikipedia, prefix: 20231101.ko/, field: text, target_bytes: 3.0e7, group: ko, val: 0.02, mock: 0.05}
+  en_web:  {repo: wikimedia/wikipedia, prefix: 20231101.simple/, field: text, target_bytes: 2.0e7, group: en, val: 0.02, mock: 0.0}
+  code:    {repo: wikimedia/wikipedia, prefix: 20231101.la/, field: text, target_bytes: 5.0e6, group: code, val: 0.05, mock: 0.0}
+mix: {ko: 0.55, en: 0.35, code: 0.10}
+benchmarks:
+  arc:       {repo: allenai/ai2_arc, include: [ARC-Challenge/test]}
+  bad:       {repo: does-not/exist, include: []}
+bpe: {sample_bytes: 2.0e7, vocab: 4096}
+r1:
+  size: S
+  micro: 2
+  tokens_per_step: 8192
+  pilot:    {variant: A1, rnns: [gla, gdn], tokens: 1.6e5, lr: 2.0e-3, seed: 0}
+  lr_sweep: {variants: [A0, A3], lrs: [1.0e-3, 2.0e-3], tokens: 1.6e5, seed: 0}
+  full:     {variants: [A0, A3s], seeds: [0], tokens: 2.4e5}
